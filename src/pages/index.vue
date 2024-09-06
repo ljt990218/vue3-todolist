@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import type { PickerColumn } from 'vant'
+// import type { PickerColumn } from 'vant'
 import { closeToast, showLoadingToast } from 'vant'
-import useAppStore from '@/stores/modules/app'
-import { languageColumns, locale } from '@/utils/i18n'
+// import useAppStore from '@/stores/modules/app'
+// import { languageColumns, locale } from '@/utils/i18n'
 import { queryTodoList } from '@/api'
 
 definePage({
@@ -17,7 +17,7 @@ showLoadingToast({
   forbidClick: true,
 })
 
-const appStore = useAppStore()
+// const appStore = useAppStore()
 const checked = ref<boolean>(isDark.value)
 
 watch(
@@ -28,36 +28,41 @@ watch(
   { immediate: true },
 )
 
-function toggle() {
-  toggleDark()
-  appStore.switchMode(isDark.value ? 'dark' : 'light')
-}
+// function toggle() {
+//   toggleDark()
+//   appStore.switchMode(isDark.value ? 'dark' : 'light')
+// }
 
-const { t } = useI18n()
+// const { t } = useI18n()
 
-const showLanguagePicker = ref(false)
-const languageValues = ref<Array<string>>([locale.value])
-const language = computed(() => languageColumns.find(l => l.value === locale.value).text)
+// const showLanguagePicker = ref(false)
+// const languageValues = ref<Array<string>>([locale.value])
+// const language = computed(() => languageColumns.find(l => l.value === locale.value).text)
 
-function onLanguageConfirm(event: { selectedOptions: PickerColumn }) {
-  locale.value = event.selectedOptions[0].value as string
-  showLanguagePicker.value = false
-}
+// function onLanguageConfirm(event: { selectedOptions: PickerColumn }) {
+//   locale.value = event.selectedOptions[0].value as string
+//   showLanguagePicker.value = false
+// }
 
 const todoList = ref([])
 queryTodoList().then(({ code, data }) => {
   closeToast()
 
-  if (code === 200)
+  if (code === 200) {
+    data.forEach((item) => {
+      item.checked = false
+    })
+
     todoList.value = data
+  }
 })
 </script>
 
 <template>
   <div class="pt-46">
     <div class="px-16">
-      <div v-for="item in todoList" :key="item.id" class="rounded-8 bg-white py-16 pl-8">
-        <van-checkbox v-model="checked">
+      <div v-for="item in todoList" :key="item.id" class="mt-10 rounded-8 bg-white py-16 pl-8">
+        <van-checkbox v-model="item.checked">
           {{ item.todo }}
         </van-checkbox>
       </div>

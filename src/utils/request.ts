@@ -26,14 +26,15 @@ function errorHandler(error: any): Promise<any> {
     if (status === 403) {
       showNotify({
         type: 'danger',
-        message: (data && data.message),
+        message: data.message,
       })
+      router.replace('/login')
     }
     // 401 未登录/未授权
     if (status === 401) {
       showNotify({
         type: 'danger',
-        message: 'Not logged in',
+        message: data.message,
       })
       router.replace('/login')
     }
