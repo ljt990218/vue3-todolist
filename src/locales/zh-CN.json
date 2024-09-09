@@ -15,7 +15,11 @@
     "account": "请输入账号",
     "password": "请输入密码",
     "pleaseEnteraccount": "请输入账号",
-    "pleaseEnterPassword": "请输入密码"
+    "pleaseEnterPassword": "请输入密码",
+    "notLogged":"暂未登录",
+    "goLoginExp":"去登录 体验更多功能",
+    "goLogin": "去登录",
+    "lookFirst": "先看看"
   },
   "settings": {
     "logout": "退出登录",

@@ -15,7 +15,11 @@
     "account": "Account",
     "password": "Password",
     "pleaseEnteraccount": "Please enter account",
-    "pleaseEnterPassword": "Please enter password"
+    "pleaseEnterPassword": "Please enter password",
+    "notLogged": "Not logged in yet",
+    "goLoginExp": "Go log in and experience more features",
+    "goLogin": "Go login",
+    "lookFirst": "Have a look first"
   },
   "settings": {
     "logout": "Sign Out",

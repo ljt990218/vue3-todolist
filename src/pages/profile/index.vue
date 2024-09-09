@@ -15,6 +15,8 @@ definePage({
 })
 
 const { userInfo } = useUserStore()
+console.log(useI18n())
+
 const { t } = useI18n()
 const appStore = useAppStore()
 const checked = ref<boolean>(isDark.value)

@@ -22,8 +22,22 @@ queryTodoList().then(({ code, data }) => {
     data.forEach((item) => {
       item.checked = false
     })
-
     todoList.value = data
+  }
+  else {
+    // test todo
+    todoList.value = [
+      {
+        id: 1,
+        todo: 'test todo',
+        checked: true,
+      },
+      {
+        id: 2,
+        todo: 'test todo2',
+        checked: false,
+      },
+    ]
   }
 })
 </script>
@@ -42,7 +56,7 @@ queryTodoList().then(({ code, data }) => {
 
 <style lang="less" scoped>
 .todo {
-  background: var(--van-cell-background);
+  background: var(--van-background-2);
 }
 .todo:first-child {
   margin-top: 0;
