@@ -3,7 +3,8 @@
     "home": "Home",
     "profile": "My Center",
     "language": "📚 Language",
-    "login": "🔒 Login"
+    "login": "🔒 Login",
+    "darkMode": "🌓 Dark Mode"
   },
   "layouts": {
     "home": "HOME",

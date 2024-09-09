@@ -19,10 +19,10 @@ queryTodoList().then(({ code, data }) => {
   closeToast()
 
   if (code === 200) {
-    data.forEach((item) => {
+    data.todos.forEach((item) => {
       item.checked = false
     })
-    todoList.value = data
+    todoList.value = data.todos
   }
   else {
     // test todo

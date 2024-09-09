@@ -19,6 +19,24 @@ const request = axios.create({
 
 // 异常拦截处理器
 function errorHandler(error: any): Promise<any> {
+  const { code } = error.response.data
+
+  // 401 403 未登录 无权限
+  if (code === 401 || code === 403) {
+    showConfirmDialog({
+      title: t('login.notLogged'),
+      message: t('login.goLoginExp'),
+      confirmButtonText: t('login.goLogin'),
+      cancelButtonText: t('login.lookFirst'),
+    })
+      .then(() => {
+        router.replace('/login')
+      })
+      .catch(() => {
+        // on cancel
+      })
+  }
+
   return Promise.reject(error)
 }
 
