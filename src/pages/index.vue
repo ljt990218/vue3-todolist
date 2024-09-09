@@ -44,4 +44,7 @@ queryTodoList().then(({ code, data }) => {
 .todo {
   background: var(--van-cell-background);
 }
+.todo:first-child {
+  margin-top: 0;
+}
 </style>

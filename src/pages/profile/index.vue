@@ -8,8 +8,8 @@ import { languageColumns, locale } from '@/utils/i18n'
 definePage({
   name: 'profile',
   meta: {
-    title: '个人中心',
-    i18n: 'menus.profile',
+    // title: '个人中心',
+    // i18n: 'menus.profile',
     level: 1,
   },
 })
@@ -35,11 +35,16 @@ function onLanguageConfirm(event: { selectedOptions: PickerColumn }) {
 </script>
 
 <template>
-  <div class="mt-66 overflow-hidden rounded-8">
+  <div class="overflow-hidden rounded-8 pt-46">
     <VanCellGroup inset>
       <van-cell title="Name" :value="userInfo.name" />
       <van-cell title="Age" :value="userInfo.age" />
       <van-cell title="CreateDate" :value="formatDate(userInfo.createDate)" />
+    </VanCellGroup>
+
+    <div class="h-16" />
+
+    <VanCellGroup inset>
       <VanCell center :title="t('menus.darkMode')">
         <template #right-icon>
           <VanSwitch v-model="checked" size="20px" aria-label="on/off Dark Mode" @click="toggle()" />
@@ -53,14 +58,14 @@ function onLanguageConfirm(event: { selectedOptions: PickerColumn }) {
         @click="showLanguagePicker = true"
       />
     </VanCellGroup>
-  </div>
 
-  <van-popup v-model:show="showLanguagePicker" position="bottom">
-    <van-picker
-      v-model="languageValues"
-      :columns="languageColumns"
-      @confirm="onLanguageConfirm"
-      @cancel="showLanguagePicker = false"
-    />
-  </van-popup>
+    <van-popup v-model:show="showLanguagePicker" position="bottom">
+      <van-picker
+        v-model="languageValues"
+        :columns="languageColumns"
+        @confirm="onLanguageConfirm"
+        @cancel="showLanguagePicker = false"
+      />
+    </van-popup>
+  </div>
 </template>
