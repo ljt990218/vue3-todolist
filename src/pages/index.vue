@@ -15,31 +15,37 @@ showLoadingToast({
 })
 
 const todoList = ref([])
-queryTodoList().then(({ code, data }) => {
-  closeToast()
+function queryTodoListFun() {
+  queryTodoList().then(({ code, data }) => {
+    closeToast()
 
-  if (code === 200) {
-    data.todos.forEach((item) => {
-      item.checked = false
-    })
-    todoList.value = data.todos
-  }
-  else {
-    // test todo
-    todoList.value = [
-      {
-        id: 1,
-        todo: 'test todo',
-        checked: true,
-      },
-      {
-        id: 2,
-        todo: 'test todo2',
-        checked: false,
-      },
-    ]
-  }
-})
+    if (code === 200 && data.count > 0) {
+      data.todos.forEach((item) => {
+        item.checked = false
+      })
+      todoList.value = data.todos
+    }
+    else {
+      // test todo
+      todoList.value = [
+        {
+          id: 1,
+          todo: 'test todo',
+          checked: true,
+        },
+        {
+          id: 2,
+          todo: 'test todo2',
+          checked: false,
+        },
+      ]
+    }
+  })
+}
+queryTodoListFun()
+
+const createShow = ref(false)
+const todoValue = ref('')
 </script>
 
 <template>
@@ -51,6 +57,21 @@ queryTodoList().then(({ code, data }) => {
         </van-checkbox>
       </div>
     </div>
+
+    <!-- 创建按钮 -->
+    <div class="fixed bottom-60 right-20 h-48 w-48 flex rounded-[50%] bg-[var(--van-blue)] lh-36">
+      <van-icon class="m-auto" size="24" name="plus" color="#fff" />
+    </div>
+
+    <!-- 创建弹窗 -->
+    <van-popup v-model:show="createShow" class="rounded-8 p-12">
+      <div class="createShow">
+        <div class="text-center text-22">
+          Add Todo
+        </div>
+        <van-field v-model="todoValue" class="bg-#F7F8FA" label="Todo" placeholder="Todo..." />
+      </div>
+    </van-popup>
   </div>
 </template>
 

@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia'
+import { showToast } from 'vant'
 import type { LoginData } from '@/api/user'
 import { getUserInfo, login as userLogin, logout as userLogout } from '@/api/user'
 import { clearToken, setToken } from '@/utils/auth'
@@ -13,9 +14,18 @@ export const useUserStore = defineStore('user', () => {
 
   const login = async (loginForm: LoginData) => {
     try {
-      const { data } = await userLogin(loginForm)
-      setToken(data.access_token)
-      setInfo(data.user_info)
+      const { code, data, message } = await userLogin(loginForm)
+      if (code === 200) {
+        setToken(data.access_token)
+        setInfo(data.user_info)
+      }
+      else {
+        showToast(message)
+      }
+
+      console.log(code)
+
+      return code
     }
     catch (error) {
       clearToken()

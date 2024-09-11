@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { type RouteMap, useRouter } from 'vue-router'
+import { showSuccessToast } from 'vant'
 import { useUserStore } from '@/stores'
 
 import logo from '~/images/logo.svg'
@@ -36,14 +37,22 @@ const rules = reactive({
 async function asyncLogin(values: any) {
   try {
     loading.value = true
-    await userStore.login({ ...postData, ...values })
-    const { redirect, ...othersQuery } = router.currentRoute.value.query
-    router.push({
-      name: (redirect as keyof RouteMap) || 'home',
-      query: {
-        ...othersQuery,
-      },
-    })
+    const code = await userStore.login({ ...postData, ...values })
+
+    if (code !== 200)
+      return
+
+    showSuccessToast({ message: '登录成功', duration: 1500 })
+
+    setTimeout(() => {
+      const { redirect, ...othersQuery } = router.currentRoute.value.query
+      router.push({
+        name: (redirect as keyof RouteMap) || 'home',
+        query: {
+          ...othersQuery,
+        },
+      })
+    }, 1500)
   }
   finally {
     loading.value = false
@@ -70,12 +79,3 @@ async function asyncLogin(values: any) {
     </van-form>
   </div>
 </template>
-
-<route lang="json">
-{
-  "name": "login",
-  "meta": {
-    "i18n": "menus.login"
-  }
-}
-</route>

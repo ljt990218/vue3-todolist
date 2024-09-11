@@ -18,6 +18,8 @@ const request = axios.create({
 })
 
 // 异常拦截处理器
+// 401: 无token 403: 无效token
+// 411: 已注册 412: 未注册 413: 密码错误
 function errorHandler(error: any): Promise<any> {
   const { code } = error.response.data
 
