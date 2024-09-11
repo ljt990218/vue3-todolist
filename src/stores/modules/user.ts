@@ -22,9 +22,6 @@ export const useUserStore = defineStore('user', () => {
       else {
         showToast(message)
       }
-
-      console.log(code)
-
       return code
     }
     catch (error) {

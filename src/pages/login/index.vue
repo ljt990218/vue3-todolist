@@ -21,8 +21,8 @@ watch(
 )
 
 const postData = reactive({
-  account: '',
-  password: '',
+  account: 'admin2',
+  password: 'admin2',
 })
 
 const rules = reactive({

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const { t } = useI18n()
-const active = ref(0)
 const route = useRoute()
+const router = useRouter()
 
 const show = computed(() => {
   if (route.meta.level && route.meta.level !== 2)
@@ -11,18 +11,41 @@ const show = computed(() => {
 </script>
 
 <template>
-  <van-tabbar v-if="show" v-model="active" placeholder route>
-    <van-tabbar-item replace to="/">
+  <div v-if="show" class="tabbar shadow-base .dark:bg-[var(--van-background-2)]">
+    <div class="bar" :class="route.name === 'home' ? 'active' : ''" @click="router.replace('/')">
       {{ t('layouts.home') }}
-      <template #icon>
-        <div class="i-carbon:home" />
-      </template>
-    </van-tabbar-item>
-    <van-tabbar-item replace to="/profile">
+    </div>
+    <div
+      class="bar" :class="route.name === 'profile' ? 'active' : ''"
+      @click="router.replace('profile')"
+    >
       {{ t('layouts.profile') }}
-      <template #icon>
-        <div class="i-carbon:user" />
-      </template>
-    </van-tabbar-item>
-  </van-tabbar>
+    </div>
+  </div>
 </template>
+
+<style lang="less" scoped>
+.tabbar {
+  position: fixed;
+  bottom: 20px;
+  left: 40px;
+  right: 40px;
+  height: 48px;
+  border-radius: 24px;
+
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  z-index: 1000;
+
+  & > .bar {
+    flex: 1;
+    text-align: center;
+  }
+}
+
+.active {
+  color: blueviolet;
+}
+</style>

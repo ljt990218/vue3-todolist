@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { closeToast, showLoadingToast } from 'vant'
-import { queryTodoList } from '@/api'
+import { closeToast, showLoadingToast, showSuccessToast, showToast } from 'vant'
+import { addTodo, queryTodoList } from '@/api'
 
 definePage({
   name: 'home',
@@ -46,12 +46,37 @@ queryTodoListFun()
 
 const createShow = ref(false)
 const todoValue = ref('')
+const createBtnLoading = ref(false)
+
+function addTodoFun() {
+  if (!todoValue.value)
+    return showToast('请输入需要添加的任务')
+
+  createBtnLoading.value = true
+  addTodo({
+    todo: todoValue.value,
+  }).then(({ code, data, message }) => {
+    if (code === 200) {
+      showSuccessToast('添加成功')
+      todoList.value.push({
+        id: data.id,
+        todo: todoValue.value,
+        checked: false,
+      })
+      todoValue.value = ''
+      createShow.value = false
+    }
+    else {
+      showToast(message)
+    }
+  })
+}
 </script>
 
 <template>
-  <div class="pt-46">
-    <div class="px-16">
-      <div v-for="item in todoList" :key="item.id" class="todo mt-10 rounded-8 py-16 pl-8">
+  <div class="pt-16">
+    <div class="px-16 pb-80">
+      <div v-for="item in todoList" :key="item.id" class="todo mt-10 rounded-8 py-16 pl-8 shadow-sm">
         <van-checkbox v-model="item.checked">
           {{ item.todo }}
         </van-checkbox>
@@ -59,7 +84,7 @@ const todoValue = ref('')
     </div>
 
     <!-- 创建按钮 -->
-    <div class="fixed bottom-60 right-20 h-48 w-48 flex rounded-[50%] bg-[var(--van-blue)] lh-36">
+    <div class="shadow-base fixed bottom-80 right-20 h-48 w-48 flex rounded-[50%] bg-[var(--van-blue)] lh-36" @click="createShow = true">
       <van-icon class="m-auto" size="24" name="plus" color="#fff" />
     </div>
 
@@ -69,7 +94,15 @@ const todoValue = ref('')
         <div class="text-center text-22">
           Add Todo
         </div>
-        <van-field v-model="todoValue" class="bg-#F7F8FA" label="Todo" placeholder="Todo..." />
+
+        <van-field v-model="todoValue" :border="false" class="my-20 bg-#F7F8FA!" label="Todo" placeholder="Todo..." />
+
+        <div class="flex justify-between">
+          <div />
+          <van-button :loading="createBtnLoading" type="primary" loading-text="Add ..." round native-type="submit" @click="addTodoFun">
+            Add
+          </van-button>
+        </div>
       </div>
     </van-popup>
   </div>
