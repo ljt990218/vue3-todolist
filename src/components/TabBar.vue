@@ -8,10 +8,33 @@ const show = computed(() => {
     return true
   return false
 })
+
+// 监听页面滚动方向
+const scrollDirection = ref('')
+let lastScrollTop = 0
+
+function handleScroll() {
+  const scrollTop = window.pageYOffset || document.documentElement.scrollTop
+  if (scrollTop > lastScrollTop) {
+    scrollDirection.value = 'down'
+  }
+  else {
+    scrollDirection.value = 'up'
+  }
+  lastScrollTop = scrollTop <= 0 ? 0 : scrollTop
+}
+
+onMounted(() => {
+  window.addEventListener('scroll', handleScroll)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('scroll', handleScroll)
+})
 </script>
 
 <template>
-  <div v-if="show" class="tabbar shadow-base .dark:bg-[var(--van-background-2)]">
+  <div v-if="show" :style="{ opacity: scrollDirection === 'down' ? '0.5' : '1' }" class="tabbar shadow-base .dark:bg-[var(--van-background-2)]">
     <div class="bar" :class="route.name === 'home' ? 'active' : ''" @click="router.replace('/')">
       {{ t('layouts.home') }}
     </div>
@@ -38,6 +61,8 @@ const show = computed(() => {
   align-items: center;
   justify-content: space-around;
   z-index: 1000;
+
+  transition: all 0.2s ease;
 
   & > .bar {
     flex: 1;

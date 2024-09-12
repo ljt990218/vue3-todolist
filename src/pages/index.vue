@@ -47,10 +47,13 @@ queryTodoListFun()
 const createShow = ref(false)
 const todoValue = ref('')
 const createBtnLoading = ref(false)
+const todoValueError = ref(false)
 
 function addTodoFun() {
-  if (!todoValue.value)
-    return showToast('请输入需要添加的任务')
+  if (!todoValue.value) {
+    todoValueError.value = true
+    return
+  }
 
   createBtnLoading.value = true
   addTodo({
@@ -71,6 +74,11 @@ function addTodoFun() {
     }
   })
 }
+
+watch(todoValue, (val) => {
+  if (val)
+    todoValueError.value = false
+})
 </script>
 
 <template>
@@ -84,7 +92,7 @@ function addTodoFun() {
     </div>
 
     <!-- 创建按钮 -->
-    <div class="shadow-base fixed bottom-80 right-20 h-48 w-48 flex rounded-[50%] bg-[var(--van-blue)] lh-36" @click="createShow = true">
+    <div class="fixed bottom-80 right-20 h-48 w-48 flex rounded-[50%] bg-[var(--van-blue)] lh-36 shadow-base" @click="createShow = true">
       <van-icon class="m-auto" size="24" name="plus" color="#fff" />
     </div>
 
@@ -95,7 +103,7 @@ function addTodoFun() {
           Add Todo
         </div>
 
-        <van-field v-model="todoValue" :border="false" class="my-20 bg-#F7F8FA!" label="Todo" placeholder="Todo..." />
+        <van-field v-model="todoValue" :border="false" :clearable="true" :error="todoValueError" class="my-20 bg-#F7F8FA!" label="Todo" placeholder="Input Todo..." />
 
         <div class="flex justify-between">
           <div />
