@@ -20,7 +20,10 @@
     "notLogged": "Not logged in yet",
     "goLoginExp": "Go log in and experience more features",
     "goLogin": "Go login",
-    "lookFirst": "Have a look first"
+    "lookFirst": "Have a look first",
+    "register": "Register",
+    "goRegister": "No account? Go register >",
+    "pleaseEnterConfirmPassword": "Please enter your password again"
   },
   "settings": {
     "logout": "Sign Out",

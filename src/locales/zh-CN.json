@@ -20,7 +20,10 @@
     "notLogged": "暂未登录",
     "goLoginExp": "去登录 体验更多功能",
     "goLogin": "去登录",
-    "lookFirst": "先看看"
+    "lookFirst": "先看看",
+    "register": "注册",
+    "goRegister": "没有账号？去注册>",
+    "pleaseEnterConfirmPassword": "请再次输入密码"
   },
   "settings": {
     "logout": "退出登录",

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { type RouteMap, useRouter } from 'vue-router'
-import { showSuccessToast } from 'vant'
+import { showSuccessToast, showToast } from 'vant'
 import { useUserStore } from '@/stores'
 
 import logo from '~/images/logo.svg'
@@ -21,8 +21,9 @@ watch(
 )
 
 const postData = reactive({
-  account: '',
-  password: '',
+  account: 'admin3',
+  password: 'admin3',
+  confirmPassword: 'admin3',
 })
 
 const rules = reactive({
@@ -32,17 +33,24 @@ const rules = reactive({
   password: [
     { required: true, message: t('login.pleaseEnterPassword') },
   ],
+  confirmPassword: [
+    { required: true, message: t('login.pleaseEnterConfirmPassword') },
+  ],
 })
 
-async function asyncLogin(values: any) {
+async function asyncRegister(values: any) {
+  if (postData.password !== postData.confirmPassword) {
+    return showToast({ message: '两次输入的密码不一致', duration: 1500 })
+  }
+
   try {
     loading.value = true
-    const code = await userStore.login({ ...postData, ...values })
+    const code = await userStore.register({ ...postData, ...values })
 
     if (code !== 200)
       return
 
-    showSuccessToast({ message: '登录成功', duration: 1000 })
+    showSuccessToast({ message: '注册成功', duration: 1000 })
 
     setTimeout(() => {
       const { redirect, ...othersQuery } = router.currentRoute.value.query
@@ -66,23 +74,16 @@ async function asyncLogin(values: any) {
       <van-image :src="dark ? logoDark : logo" class="h-120 w-120" />
     </div>
 
-    <van-form :model="postData" :rules="rules" @submit="asyncLogin">
+    <van-form :model="postData" :rules="rules" @submit="asyncRegister">
       <van-cell-group inset>
         <van-field v-model="postData.account" :rules="rules.account" name="account" :placeholder="t('login.account')" left-icon="contact" />
         <van-field v-model="postData.password" :rules="rules.password" name="password" :placeholder="t('login.password')" left-icon="lock" type="password" />
+        <van-field v-model="postData.confirmPassword" :rules="rules.confirmPassword" name="confirmPassword" :placeholder="t('login.pleaseEnterConfirmPassword')" left-icon="lock" type="password" />
       </van-cell-group>
-
       <div class="m-16 mt-32">
         <van-button :loading="loading" round block type="primary" native-type="submit">
-          {{ t('login.login') }}
+          {{ t('login.register') }}
         </van-button>
-      </div>
-
-      <!-- 去注册 -->
-      <div class="m-16 text-right">
-        <a href="/login/register">
-          {{ t('login.goRegister') }}
-        </a>
       </div>
     </van-form>
   </div>
