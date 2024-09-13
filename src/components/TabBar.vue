@@ -34,7 +34,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div v-if="show" :style="{ opacity: scrollDirection === 'down' ? '0.5' : '1' }" class="tabbar shadow-base .dark:bg-[var(--van-background-2)]">
+  <div v-if="show" :style="{ opacity: scrollDirection === 'down' ? '0.3' : '1' }" class="tabbar shadow-base .dark:bg-[var(--van-background-2)]">
     <div class="bar" :class="route.name === 'home' ? 'active' : ''" @click="router.replace('/')">
       {{ t('layouts.home') }}
     </div>
@@ -50,7 +50,7 @@ onUnmounted(() => {
 <style lang="less" scoped>
 .tabbar {
   position: fixed;
-  bottom: 20px;
+  bottom: 10px;
   left: 40px;
   right: 40px;
   height: 48px;

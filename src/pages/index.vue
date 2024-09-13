@@ -92,7 +92,7 @@ watch(todoValue, (val) => {
     </div>
 
     <!-- 创建按钮 -->
-    <div class="fixed bottom-80 right-20 h-48 w-48 flex rounded-[50%] bg-[var(--van-blue)] lh-36 shadow-base" @click="createShow = true">
+    <div class="fixed bottom-70 right-20 h-48 w-48 flex rounded-[50%] bg-[var(--van-blue)] lh-36 shadow-base" @click="createShow = true">
       <van-icon class="m-auto" size="24" name="plus" color="#fff" />
     </div>
 
