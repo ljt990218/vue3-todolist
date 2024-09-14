@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { closeToast, showLoadingToast, showSuccessToast, showToast } from 'vant'
+import Todo from './components/todo.vue'
 import { addTodo, queryTodoList } from '@/api'
 
 definePage({
@@ -84,11 +85,7 @@ watch(todoValue, (val) => {
 <template>
   <div class="pt-16">
     <div class="px-16 pb-80">
-      <div v-for="item in todoList" :key="item.id" class="todo mt-10 rounded-8 py-16 pl-8 shadow-sm">
-        <van-checkbox v-model="item.checked">
-          {{ item.todo }}
-        </van-checkbox>
-      </div>
+      <Todo :todo-list="todoList" />
     </div>
 
     <!-- 创建按钮 -->
@@ -115,12 +112,3 @@ watch(todoValue, (val) => {
     </van-popup>
   </div>
 </template>
-
-<style lang="less" scoped>
-.todo {
-  background: var(--van-background-2);
-}
-.todo:first-child {
-  margin-top: 0;
-}
-</style>

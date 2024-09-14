@@ -20,6 +20,7 @@ export function createVitePlugins() {
     // https://github.com/posva/unplugin-vue-router
     VueRouter({
       extensions: ['.vue'],
+      exclude: ['**/components/**/*'],
       routesFolder: 'src/pages',
       dts: 'src/typed-router.d.ts',
     }),

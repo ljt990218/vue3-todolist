@@ -54,7 +54,7 @@ function logoutFun() {
 </script>
 
 <template>
-  <div class="overflow-hidden rounded-8 pt-16">
+  <div class="rounded-8 pt-16">
     <VanCellGroup inset shadow-base>
       <van-cell title="Name" :value="userInfo.name" />
       <van-cell title="Age" :value="userInfo.age" />
