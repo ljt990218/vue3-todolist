@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { closeToast, showLoadingToast, showSuccessToast, showToast } from 'vant'
-import Todo from './components/todo.vue'
+import TodoList from './components/todoList.vue'
 import { addTodo, queryTodoList } from '@/api'
 
 definePage({
@@ -50,6 +50,11 @@ const todoValue = ref('')
 const createBtnLoading = ref(false)
 const todoValueError = ref(false)
 
+watch(todoValue, (val) => {
+  if (val)
+    todoValueError.value = false
+})
+
 function addTodoFun() {
   if (!todoValue.value) {
     todoValueError.value = true
@@ -75,17 +80,12 @@ function addTodoFun() {
     }
   })
 }
-
-watch(todoValue, (val) => {
-  if (val)
-    todoValueError.value = false
-})
 </script>
 
 <template>
   <div class="pt-16">
     <div class="px-16 pb-80">
-      <Todo :todo-list="todoList" />
+      <TodoList :todo-list="todoList" />
     </div>
 
     <!-- 创建按钮 -->
