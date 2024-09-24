@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { closeToast, showLoadingToast, showSuccessToast, showToast } from 'vant'
 import TodoList from './components/todoList.vue'
-import { addTodo, queryTodoList } from '@/api'
+import { addTodo, queryTodoList } from '@/api/todo'
 
 definePage({
   name: 'home',
@@ -23,6 +23,7 @@ function queryTodoListFun() {
     if (code === 200 && data.count > 0) {
       data.todos.forEach((item) => {
         item.checked = false
+        item.open = true
       })
       todoList.value = data.todos
     }

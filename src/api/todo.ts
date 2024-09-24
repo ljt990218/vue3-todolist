@@ -7,3 +7,7 @@ export async function queryTodoList(): Promise<any> {
 export async function addTodo(data: any): Promise<any> {
   return request.post('/todolist', data)
 }
+
+export async function delTodo(id: any) {
+  return request.delete(`/todolist/${id}`)
+}
