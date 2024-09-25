@@ -65,14 +65,10 @@ function addTodoFun() {
   createBtnLoading.value = true
   addTodo({
     todo: todoValue.value,
-  }).then(({ code, data, message }) => {
+  }).then(({ code, message }) => {
     if (code === 200) {
       showSuccessToast('添加成功')
-      todoList.value.push({
-        id: data.id,
-        todo: todoValue.value,
-        checked: false,
-      })
+      queryTodoListFun()
       todoValue.value = ''
       createShow.value = false
     }
@@ -101,11 +97,11 @@ function addTodoFun() {
           Add Todo
         </div>
 
-        <van-field v-model="todoValue" :border="false" :clearable="true" :error="todoValueError" class="my-20 bg-#F7F8FA!" label="Todo" placeholder="Input Todo..." />
+        <van-field v-model="todoValue" :border="false" :clearable="true" :error="todoValueError" :autofocus="true" class="my-20 bg-#F7F8FA!" label="Todo" placeholder="Input Todo..." />
 
         <div class="flex justify-between">
           <div />
-          <van-button :loading="createBtnLoading" type="primary" loading-text="Add ..." round native-type="submit" @click="addTodoFun">
+          <van-button :loading="createBtnLoading" type="primary" loading-text="Adding ..." round native-type="submit" @click="addTodoFun">
             Add
           </van-button>
         </div>

@@ -11,3 +11,7 @@ export async function addTodo(data: any): Promise<any> {
 export async function delTodo(id: any) {
   return request.delete(`/todolist/${id}`)
 }
+
+export async function updTodo(data: any) {
+  return request.patch(`/todolist/${data.id}`, data)
+}
