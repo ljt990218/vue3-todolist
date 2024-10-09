@@ -51,7 +51,7 @@ const todoValue = ref('')
 const createBtnLoading = ref(false)
 const todoValueError = ref(false)
 
-watch(todoValue, (val) => {
+watch(todoValue, (val: any) => {
   if (val)
     todoValueError.value = false
 })

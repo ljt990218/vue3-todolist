@@ -55,7 +55,7 @@ function logoutFun() {
 
 <template>
   <div class="rounded-8 pt-16">
-    <VanCellGroup inset shadow-base>
+    <VanCellGroup inset shadow-sm>
       <van-cell title="Name" :value="userInfo.name" />
       <van-cell title="Age" :value="userInfo.age" />
       <van-cell title="CreateDate" :value="formatDate(userInfo.createDate)" />
@@ -63,7 +63,7 @@ function logoutFun() {
 
     <div class="h-16" />
 
-    <VanCellGroup inset shadow-base>
+    <VanCellGroup inset shadow-sm>
       <VanCell center :title="t('menus.darkMode')">
         <template #right-icon>
           <VanSwitch v-model="checked" size="20px" aria-label="on/off Dark Mode" @click="toggle()" />

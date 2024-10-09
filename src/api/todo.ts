@@ -8,10 +8,10 @@ export async function addTodo(data: any): Promise<any> {
   return request.post('/todolist', data)
 }
 
-export async function delTodo(id: any) {
+export async function delTodo(id: any): Promise<any> {
   return request.delete(`/todolist/${id}`)
 }
 
-export async function updTodo(data: any) {
+export async function updTodo(data: any): Promise<any> {
   return request.patch(`/todolist/${data.id}`, data)
 }
