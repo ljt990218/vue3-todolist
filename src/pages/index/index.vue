@@ -31,11 +31,13 @@ function queryTodoListFun() {
           id: 1,
           todo: 'test todo',
           checked: true,
+          open: true,
         },
         {
           id: 2,
           todo: 'test todo2',
           checked: false,
+          open: true,
         },
       ]
     }
@@ -86,6 +88,8 @@ function addTodoFun() {
     <div class="fixed bottom-70 right-20 h-48 w-48 flex rounded-[50%] bg-[var(--van-blue)] lh-36 shadow-base" @click="createShow = true">
       <van-icon class="m-auto" size="24" name="plus" color="#fff" />
     </div>
+
+    <TabBar />
 
     <!-- 创建弹窗 -->
     <van-popup v-model:show="createShow" class="rounded-8 p-12">

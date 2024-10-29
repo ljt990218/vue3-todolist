@@ -47,6 +47,5 @@ onMounted(() => {
         <component :is="Component" :key="route.name" />
       </keep-alive>
     </router-view>
-    <TabBar />
   </VanConfigProvider>
 </template>

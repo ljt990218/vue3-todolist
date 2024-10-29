@@ -3,12 +3,6 @@ const { t } = useI18n()
 const route = useRoute()
 const router = useRouter()
 
-const show = computed(() => {
-  if (route.meta.level && route.meta.level !== 2)
-    return true
-  return false
-})
-
 // 监听页面滚动方向
 const scrollDirection = ref('')
 let lastScrollTop = 0
@@ -34,7 +28,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div v-if="show" :style="{ opacity: scrollDirection === 'down' ? '0.3' : '1' }" class="tabbar shadow-base .dark:bg-[var(--van-background-2)]">
+  <div :style="{ opacity: scrollDirection === 'down' ? '0.3' : '1' }" class="tabbar shadow-base .dark:bg-[var(--van-background-2)]">
     <div class="bar" :class="route.name === 'home' ? 'active' : ''" @click="router.replace('/')">
       {{ t('layouts.home') }}
     </div>

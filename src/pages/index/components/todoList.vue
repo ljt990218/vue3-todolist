@@ -1,8 +1,12 @@
 <script setup lang="ts">
 import { showConfirmDialog, showSuccessToast, showToast } from 'vant'
 import { delTodo, updTodo } from '@/api/todo'
+import useAppStore from '@/stores/modules/app'
 
 const props = defineProps(['todoList'])
+
+const appStore = useAppStore()
+
 const localTodoList = ref([...props.todoList])
 
 watch(() => props.todoList, (newList) => {
@@ -68,10 +72,17 @@ function editTodoFun() {
     }
   })
 }
+
+function getItemBackgroundColor(checked: boolean) {
+  if (checked) {
+    return appStore.mode === 'dark' ? '#1c1c1e' : '#f0f0f0'
+  }
+  return appStore.mode === 'dark' ? '#161616' : '#fff'
+}
 </script>
 
 <template>
-  <div v-for="(item, index) in localTodoList" :key="item.id" class="mt-10 flex items-center overflow-hidden rounded-8 bg-[var(--van-background-2)] shadow-sm first:mt-0" :style="{ backgroundColor: item.checked ? '#f0f0f0' : '' }">
+  <div v-for="(item, index) in localTodoList" :key="item.id" class="mt-10 flex items-center overflow-hidden rounded-8 bg-[var(--van-background-2)] shadow-sm first:mt-0" :style="{ backgroundColor: getItemBackgroundColor(item.checked) }">
     <van-swipe-cell class="w-full" @open="editIconShow(index, false)" @close="editIconShow(index, true)">
       <div class="flex items-center justify-between py-16 pl-8 pr-24">
         <van-checkbox v-model="item.checked">
@@ -115,5 +126,9 @@ function editTodoFun() {
 .icon-fade-enter-from,
 .icon-fade-leave-to {
   opacity: 0;
+}
+
+:deep(.van-swipe-cell__right) {
+  right: -1px !important;
 }
 </style>

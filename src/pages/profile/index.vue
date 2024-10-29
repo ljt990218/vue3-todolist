@@ -8,9 +8,6 @@ import { languageColumns, locale } from '@/utils/i18n'
 
 definePage({
   name: 'profile',
-  meta: {
-    level: 1,
-  },
 })
 
 const { userInfo, logout } = useUserStore()
@@ -79,6 +76,8 @@ function logoutFun() {
     </VanCellGroup>
 
     <div class="h-16" />
+
+    <TabBar />
 
     <van-popup v-model:show="showLanguagePicker" position="bottom">
       <van-picker
