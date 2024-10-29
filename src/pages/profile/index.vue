@@ -9,8 +9,6 @@ import { languageColumns, locale } from '@/utils/i18n'
 definePage({
   name: 'profile',
   meta: {
-    // title: '个人中心',
-    // i18n: 'menus.profile',
     level: 1,
   },
 })

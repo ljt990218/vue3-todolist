@@ -5,9 +5,6 @@ import { addTodo, queryTodoList } from '@/api/todo'
 
 definePage({
   name: 'home',
-  meta: {
-    level: 1,
-  },
 })
 
 showLoadingToast({
