@@ -9,7 +9,7 @@ import logoDark from '~/images/logo-dark.svg'
 const { t } = useI18n()
 const router = useRouter()
 const userStore = useUserStore()
-const loading = ref(false)
+const loading = ref<boolean>(false)
 
 const dark = ref<boolean>(isDark.value)
 

@@ -22,7 +22,7 @@ function toggle() {
   appStore.switchMode(isDark.value ? 'dark' : 'light')
 }
 
-const showLanguagePicker = ref(false)
+const showLanguagePicker = ref<boolean>(false)
 const languageValues = ref<Array<string>>([locale.value])
 const language = computed(() => languageColumns.find(l => l.value === locale.value).text)
 
