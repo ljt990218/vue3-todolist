@@ -12,10 +12,12 @@ showLoadingToast({
   forbidClick: true,
 })
 
-const todoList = ref([])
+const isLoading = ref<boolean>(false)
+const todoList = ref<Array<any>>([])
 function queryTodoListFun() {
   queryTodoList().then(({ code, data }) => {
     closeToast()
+    isLoading.value = false
 
     if (code === 200 && data.count > 0) {
       data.todos.forEach((item) => {
@@ -45,11 +47,18 @@ function queryTodoListFun() {
 }
 queryTodoListFun()
 
-const createShow = ref(false)
-const todoValue = ref('')
-const createBtnLoading = ref(false)
-const todoValueError = ref(false)
+function onRefresh() {
+  showLoadingToast({
+    message: 'load...',
+    forbidClick: true,
+  })
+  queryTodoListFun()
+}
 
+const createShow = ref<boolean>(false)
+const todoValue = ref<any>('')
+const createBtnLoading = ref<boolean>(false)
+const todoValueError = ref<boolean>(false)
 watch(todoValue, (val: any) => {
   if (val)
     todoValueError.value = false
@@ -81,7 +90,13 @@ function addTodoFun() {
 <template>
   <div class="pt-16">
     <div class="px-16 pb-80">
-      <TodoList :todo-list="todoList" />
+      <van-pull-refresh
+        v-model="isLoading"
+        success-text="刷新成功"
+        @refresh="onRefresh"
+      >
+        <TodoList :todo-list="todoList" />
+      </van-pull-refresh>
     </div>
 
     <!-- 创建按钮 -->
