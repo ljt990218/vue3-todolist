@@ -1,7 +1,7 @@
 import request from '@/utils/request'
 
-export async function queryTodoList(): Promise<any> {
-  return request.get('/todolist')
+export async function queryTodoList(data: any): Promise<any> {
+  return request.get('/todolist', { params: data })
 }
 
 export async function addTodo(data: any): Promise<any> {

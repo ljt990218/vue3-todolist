@@ -13,18 +13,33 @@ showLoadingToast({
 })
 
 const isLoading = ref<boolean>(false)
+const page = ref<number>(1)
+const pageSize = ref<number>(20)
+const hasMore = ref<boolean>(true)
 const todoList = ref<Array<any>>([])
-function queryTodoListFun() {
-  queryTodoList().then(({ code, data }) => {
+
+function queryTodoListFun(resetPage = false) {
+  // 如果需要重置页码
+  if (resetPage)
+    page.value = 1
+
+  queryTodoList({ page: page.value, pageSize: pageSize.value }).then(({ code, data }) => {
     closeToast()
     isLoading.value = false
 
-    if (code === 200 && data.count > 0) {
+    if (code === 200 && data.meta.total > 0) {
       data.todos.forEach((item) => {
         item.checked = false
         item.open = true
       })
-      todoList.value = data.todos
+
+      // 根据是否重置页码决定是替换还是追加数据
+      if (resetPage || page.value === 1)
+        todoList.value = data.todos
+      else
+        todoList.value = [...todoList.value, ...data.todos]
+
+      hasMore.value = todoList.value.length < data.meta.total
     }
     else {
       // test todo
@@ -52,7 +67,7 @@ function onRefresh() {
     message: 'load...',
     forbidClick: true,
   })
-  queryTodoListFun()
+  queryTodoListFun(true)
 }
 
 const createShow = ref<boolean>(false)
@@ -74,6 +89,8 @@ function addTodoFun() {
   addTodo({
     todo: todoValue.value,
   }).then(({ code, message }) => {
+    createBtnLoading.value = false
+
     if (code === 200) {
       showSuccessToast('添加成功')
       queryTodoListFun()
@@ -85,6 +102,26 @@ function addTodoFun() {
     }
   })
 }
+
+// 添加滚动事件处理函数
+function handleScroll() {
+  const scrollTop = document.documentElement.scrollTop || document.body.scrollTop
+  const clientHeight = document.documentElement.clientHeight
+  const scrollHeight = document.documentElement.scrollHeight
+
+  if (scrollHeight - scrollTop - clientHeight < 100 && !isLoading.value && hasMore.value) {
+    isLoading.value = true
+    page.value++
+    queryTodoListFun()
+  }
+}
+
+onMounted(() => {
+  window.addEventListener('scroll', handleScroll)
+})
+onUnmounted(() => {
+  window.removeEventListener('scroll', handleScroll)
+})
 </script>
 
 <template>
@@ -125,3 +162,9 @@ function addTodoFun() {
     </van-popup>
   </div>
 </template>
+
+<style>
+.van-pull-refresh {
+  overflow: unset;
+}
+</style>
