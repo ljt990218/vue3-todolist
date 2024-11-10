@@ -2,6 +2,7 @@
 import { closeToast, showLoadingToast, showSuccessToast, showToast } from 'vant'
 import TodoList from './components/todoList.vue'
 import { addTodo, queryTodoList } from '@/api/todo'
+import type { ApiResponse, TodoItem } from '@/types'
 
 definePage({
   name: 'home',
@@ -16,14 +17,14 @@ const isLoading = ref<boolean>(false)
 const page = ref<number>(1)
 const pageSize = ref<number>(20)
 const hasMore = ref<boolean>(true)
-const todoList = ref<Array<any>>([])
+const todoList = ref<TodoItem[]>([])
 
 function queryTodoListFun(resetPage = false) {
   // 如果需要重置页码
   if (resetPage)
     page.value = 1
 
-  queryTodoList({ page: page.value, pageSize: pageSize.value }).then(({ code, data }) => {
+  queryTodoList({ page: page.value, pageSize: pageSize.value }).then(({ code, data }: ApiResponse) => {
     closeToast()
     isLoading.value = false
 
@@ -40,23 +41,6 @@ function queryTodoListFun(resetPage = false) {
         todoList.value = [...todoList.value, ...data.todos]
 
       hasMore.value = todoList.value.length < data.meta.total
-    }
-    else {
-      // test todo
-      todoList.value = [
-        {
-          id: 1,
-          todo: 'test todo',
-          checked: true,
-          open: true,
-        },
-        {
-          id: 2,
-          todo: 'test todo2',
-          checked: false,
-          open: true,
-        },
-      ]
     }
   })
 }
@@ -126,7 +110,7 @@ onUnmounted(() => {
 
 <template>
   <div class="pt-16">
-    <div class="px-16 pb-80">
+    <div v-if="todoList.length > 0" class="px-16 pb-80">
       <van-pull-refresh
         v-model="isLoading"
         success-text="刷新成功"
@@ -134,6 +118,12 @@ onUnmounted(() => {
       >
         <TodoList :todo-list="todoList" />
       </van-pull-refresh>
+    </div>
+
+    <div v-else class="h-[calc(100vh-200px)] flex items-center justify-center px-16 pb-80">
+      <div class="text-center text-22 color-[var(--van-gray-7)]">
+        No Todo
+      </div>
     </div>
 
     <!-- 创建按钮 -->

@@ -2,16 +2,16 @@
 import { showConfirmDialog, showSuccessToast, showToast } from 'vant'
 import { delTodo, updTodo } from '@/api/todo'
 import useAppStore from '@/stores/modules/app'
+import type { ApiResponse, TodoItem } from '@/types'
 
-const props = defineProps(['todoList'])
+// 定义 props 类型
+interface Props {
+  todoList: TodoItem[]
+}
 
+const props = defineProps<Props>()
 const appStore = useAppStore()
-
-const localTodoList = ref([...props.todoList])
-
-watch(() => props.todoList, (newList) => {
-  localTodoList.value = [...newList]
-})
+const localTodoList = ref<TodoItem[]>([...props.todoList])
 
 function editIconShow(index: number, status: boolean) {
   localTodoList.value[index].open = status
@@ -38,11 +38,15 @@ function delTodoFun(item: any) {
     })
 }
 
-const editPopupShow = ref(false)
-const todoValue = ref('')
-const editTodo = ref({}) as any
-const editBtnLoading = ref(false)
-const todoValueError = ref(false)
+const editPopupShow = ref<boolean>(false)
+const todoValue = ref<string>('')
+const editTodo = ref<TodoItem | null>(null)
+const editBtnLoading = ref<boolean>(false)
+const todoValueError = ref<boolean>(false)
+
+watch(() => props.todoList, (newList) => {
+  localTodoList.value = [...newList]
+})
 
 watch(todoValue, (val) => {
   if (val)
@@ -56,8 +60,12 @@ function openEdit(item: any) {
 }
 
 function editTodoFun() {
+  if (!editTodo.value)
+    return
+
   editBtnLoading.value = true
-  updTodo(editTodo.value).then(({ code, message }) => {
+
+  updTodo(editTodo.value).then(({ code, message }: ApiResponse) => {
     editBtnLoading.value = false
     if (code === 200) {
       editPopupShow.value = false
@@ -71,6 +79,10 @@ function editTodoFun() {
       showToast(message)
     }
   })
+    .catch((error: any) => {
+      editBtnLoading.value = false
+      showToast(error.message)
+    })
 }
 
 function getItemBackgroundColor(checked: boolean) {
