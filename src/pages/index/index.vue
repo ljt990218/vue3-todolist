@@ -111,11 +111,7 @@ onUnmounted(() => {
 <template>
   <div class="pt-16">
     <div v-if="todoList.length > 0" class="px-16 pb-80">
-      <van-pull-refresh
-        v-model="isLoading"
-        success-text="刷新成功"
-        @refresh="onRefresh"
-      >
+      <van-pull-refresh v-model="isLoading" success-text="刷新成功" @refresh="onRefresh">
         <TodoList :todo-list="todoList" />
       </van-pull-refresh>
     </div>
@@ -127,30 +123,39 @@ onUnmounted(() => {
     </div>
 
     <!-- 创建按钮 -->
-    <div class="fixed bottom-70 right-20 h-40 w-40 flex rounded-[50%] bg-[var(--van-blue)] lh-36 shadow-base" @click="createShow = true">
+    <div
+      class="fixed bottom-70 right-20 h-40 w-40 flex rounded-[50%] bg-[var(--van-blue)] lh-36 shadow-base"
+      @click="createShow = true"
+    >
       <van-icon class="m-auto" size="20" name="plus" color="#fff" />
     </div>
 
     <TabBar />
-
-    <!-- 创建弹窗 -->
-    <van-popup v-model:show="createShow" class="rounded-8 p-12">
-      <div class="createShow">
-        <div class="text-center text-22">
-          Add Todo
-        </div>
-
-        <van-field v-model="todoValue" :border="false" :clearable="true" :error="todoValueError" :autofocus="true" class="my-20 bg-#F7F8FA!" label="Todo" placeholder="Input Todo..." />
-
-        <div class="flex justify-between">
-          <div />
-          <van-button :loading="createBtnLoading" type="primary" loading-text="Adding ..." round native-type="submit" @click="addTodoFun">
-            Add
-          </van-button>
-        </div>
-      </div>
-    </van-popup>
   </div>
+
+  <!-- 创建弹窗 -->
+  <van-popup v-model:show="createShow" class="rounded-8 p-12">
+    <div class="createShow">
+      <div class="text-center text-22">
+        Add Todo
+      </div>
+
+      <van-field
+        v-model="todoValue" :border="false" :clearable="true" :error="todoValueError" :autofocus="true"
+        class="my-20" label="Todo" placeholder="Input Todo..."
+      />
+
+      <div class="flex justify-between">
+        <div />
+        <van-button
+          :loading="createBtnLoading" type="primary" loading-text="Adding ..." round native-type="submit"
+          @click="addTodoFun"
+        >
+          Add
+        </van-button>
+      </div>
+    </div>
+  </van-popup>
 </template>
 
 <style>
