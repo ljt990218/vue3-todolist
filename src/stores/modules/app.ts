@@ -1,5 +1,5 @@
-import { defineStore } from 'pinia'
 import type { ConfigProviderTheme } from 'vant'
+import { defineStore } from 'pinia'
 
 export interface AppStore {
   switchMode: (val: ConfigProviderTheme) => void

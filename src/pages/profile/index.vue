@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import type { PickerColumn } from 'vant'
-import { showConfirmDialog, showToast } from 'vant'
 import { useUserStore } from '@/stores'
-import { formatDate } from '@/utils/date'
 import useAppStore from '@/stores/modules/app'
+import { formatDate } from '@/utils/date'
 import { languageColumns, locale } from '@/utils/i18n'
+import { showConfirmDialog, showToast } from 'vant'
 
 definePage({
   name: 'profile',

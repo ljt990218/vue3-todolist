@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { storeToRefs } from 'pinia'
+import useAutoThemeSwitcher from '@/hooks/useAutoThemeSwitcher'
 import useAppStore from '@/stores/modules/app'
 import useRouteCache from '@/stores/modules/routeCache'
-import useAutoThemeSwitcher from '@/hooks/useAutoThemeSwitcher'
+import { storeToRefs } from 'pinia'
 
 useHead({
   title: 'Vue3-TodoList',

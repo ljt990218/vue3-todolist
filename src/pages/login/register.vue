@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { type RouteMap, useRouter } from 'vue-router'
-import { showSuccessToast, showToast } from 'vant'
 import { useUserStore } from '@/stores'
+import { showSuccessToast, showToast } from 'vant'
+import { type RouteMap, useRouter } from 'vue-router'
 
-import logo from '~/images/logo.svg'
 import logoDark from '~/images/logo-dark.svg'
+import logo from '~/images/logo.svg'
 
 const { t } = useI18n()
 const router = useRouter()

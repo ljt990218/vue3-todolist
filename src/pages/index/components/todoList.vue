@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { showConfirmDialog, showSuccessToast, showToast } from 'vant'
+import type { ApiResponse, TodoItem } from '@/types'
 import { delTodo, updTodo } from '@/api/todo'
 import useAppStore from '@/stores/modules/app'
-import type { ApiResponse, TodoItem } from '@/types'
+import { showConfirmDialog, showSuccessToast, showToast } from 'vant'
 
 // 定义 props 类型
 interface Props {
@@ -78,11 +78,10 @@ function editTodoFun() {
     else {
       showToast(message)
     }
+  }).catch((error: any) => {
+    editBtnLoading.value = false
+    showToast(error.message)
   })
-    .catch((error: any) => {
-      editBtnLoading.value = false
-      showToast(error.message)
-    })
 }
 
 function getItemBackgroundColor(checked: boolean) {

@@ -1,8 +1,8 @@
 <script setup lang="ts">
+import type { ApiResponse, TodoItem } from '@/types'
+import { addTodo, queryTodoList } from '@/api/todo'
 import { closeToast, showLoadingToast, showSuccessToast, showToast } from 'vant'
 import TodoList from './components/todoList.vue'
-import { addTodo, queryTodoList } from '@/api/todo'
-import type { ApiResponse, TodoItem } from '@/types'
 
 definePage({
   name: 'home',

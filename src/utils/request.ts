@@ -1,10 +1,10 @@
 import type { InternalAxiosRequestConfig } from 'axios'
-import axios from 'axios'
-import { showConfirmDialog } from 'vant'
+import router from '@/router'
+import { STORAGE_TOKEN_KEY } from '@/stores/mutation-type'
 import { i18n } from '@/utils/i18n'
 import { localStorage } from '@/utils/local-storage'
-import { STORAGE_TOKEN_KEY } from '@/stores/mutation-type'
-import router from '@/router'
+import axios from 'axios'
+import { showConfirmDialog } from 'vant'
 
 export const REQUEST_TOKEN_KEY = 'token'
 

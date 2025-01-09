@@ -1,8 +1,8 @@
-import { defineStore } from 'pinia'
-import { showToast } from 'vant'
 import type { LoginData, RegisterData } from '@/api/user'
 import { getUserInfo, login as userLogin, logout as userLogout, register as userRegister } from '@/api/user'
 import { clearToken, setToken } from '@/utils/auth'
+import { defineStore } from 'pinia'
+import { showToast } from 'vant'
 
 export const useUserStore = defineStore('user', () => {
   const userInfo = ref({}) as any

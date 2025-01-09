@@ -1,11 +1,11 @@
-import { createRouter, createWebHistory } from 'vue-router/auto'
-import { handleHotUpdate, routes } from 'vue-router/auto-routes'
-
-import NProgress from 'nprogress'
-import 'nprogress/nprogress.css'
-
 import type { EnhancedRouteLocation } from './types'
 import useRouteCacheStore from '@/stores/modules/routeCache'
+
+import NProgress from 'nprogress'
+import { createRouter, createWebHistory } from 'vue-router/auto'
+
+import { handleHotUpdate, routes } from 'vue-router/auto-routes'
+import 'nprogress/nprogress.css'
 
 NProgress.configure({ showSpinner: true, parent: '#app' })
 

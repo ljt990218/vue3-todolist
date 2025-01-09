@@ -1,7 +1,6 @@
 const include = [
   'axios',
   'store',
-  'echarts',
   'lodash-es',
   'resize-detector',
   'store/plugins/expire',
@@ -21,4 +20,4 @@ const exclude = [
   '@iconify-json/carbon',
 ]
 
-export { include, exclude }
+export { exclude, include }

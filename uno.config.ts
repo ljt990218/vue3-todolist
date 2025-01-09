@@ -1,3 +1,5 @@
+import presetRemToPx from '@unocss/preset-rem-to-px'
+
 import {
   defineConfig,
   presetAttributify,
@@ -5,8 +7,6 @@ import {
   presetMini,
   presetUno,
 } from 'unocss'
-
-import presetRemToPx from '@unocss/preset-rem-to-px'
 
 // 刚使用unocss的朋友，可以借助这个工具： https://to-unocss.netlify.app
 
