@@ -109,7 +109,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div class="pt-16">
+  <div class="relative h-[100dvh] pt-16">
     <div v-if="todoList.length > 0" class="px-16 pb-80">
       <van-pull-refresh v-model="isLoading" success-text="刷新成功" @refresh="onRefresh">
         <TodoList :todo-list="todoList" />
@@ -124,7 +124,7 @@ onUnmounted(() => {
 
     <!-- 创建按钮 -->
     <div
-      class="fixed bottom-70 right-20 h-40 w-40 flex rounded-[50%] bg-[var(--van-blue)] lh-36 shadow-base"
+      class="absolute bottom-70 right-20 h-40 w-40 flex cursor-pointer rounded-[50%] bg-[var(--van-blue)] lh-36 shadow-base"
       @click="createShow = true"
     >
       <van-icon class="m-auto" size="20" name="plus" color="#fff" />

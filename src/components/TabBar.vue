@@ -61,6 +61,7 @@ onUnmounted(() => {
   & > .bar {
     flex: 1;
     text-align: center;
+    cursor: pointer;
   }
 }
 
