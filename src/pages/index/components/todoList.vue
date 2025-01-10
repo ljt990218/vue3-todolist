@@ -4,7 +4,6 @@ import { delTodo, updTodo } from '@/api/todo'
 import useAppStore from '@/stores/modules/app'
 import { showConfirmDialog, showSuccessToast, showToast } from 'vant'
 
-// 定义 props 类型
 interface Props {
   todoList: TodoItem[]
 }
@@ -116,7 +115,7 @@ function getItemBackgroundColor(checked: boolean) {
         Edit Todo
       </div>
 
-      <van-field v-model="editTodo.todo" :border="false" :clearable="true" :error="todoValueError" :autofocus="true" class="my-20 bg-#F7F8FA!" label="Todo：" placeholder="Input Todo..." />
+      <van-field v-model="editTodo.todo" :border="false" :clearable="true" :error="todoValueError" :autofocus="true" class="my-20" label="Todo：" placeholder="Input Todo..." />
 
       <div class="flex justify-between">
         <div />
