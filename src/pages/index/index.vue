@@ -117,7 +117,7 @@ onUnmounted(() => {
     </div>
 
     <div v-else class="h-[calc(100vh-200px)] flex items-center justify-center px-16 pb-80">
-      <div class="text-center text-22 color-[var(--van-gray-7)]">
+      <div class="text-center text-22">
         No Todo
       </div>
     </div>

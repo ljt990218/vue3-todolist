@@ -12,20 +12,46 @@ const props = defineProps<Props>()
 const appStore = useAppStore()
 const localTodoList = ref<TodoItem[]>([...props.todoList])
 
+const editPopupShow = ref<boolean>(false)
+const selectTodoValue = ref<TodoItem | null>(null)
+const editTodo = ref<TodoItem | null>(null)
+const editBtnLoading = ref<boolean>(false)
+const todoValueError = ref<boolean>(false)
+const delBtnLoading = ref<boolean>(false)
+
+watch(() => props.todoList, (newList) => {
+  localTodoList.value = [...newList]
+})
+
+watch(selectTodoValue, (val) => {
+  if (val)
+    todoValueError.value = false
+})
+
+function openEdit(item: any) {
+  editTodo.value = item
+  editPopupShow.value = true
+  selectTodoValue.value = item
+}
+
 function editIconShow(index: number, status: boolean) {
   localTodoList.value[index].open = status
 }
-function delTodoFun(item: any) {
+
+function delTodoFun() {
   showConfirmDialog({
     title: '提示',
     message:
-    `是否要删除'${item.todo}'`,
+    `是否要删除'${selectTodoValue.value?.todo}'`,
   })
     .then(() => {
-      delTodo(item.id).then(({ code, message }) => {
+      delTodo(selectTodoValue.value?.id).then(({ code, message }) => {
         if (code === 200) {
+          delBtnLoading.value = false
+          editPopupShow.value = false
+
           // 删除item
-          const index = localTodoList.value.findIndex(todo => todo.id === item.id)
+          const index = localTodoList.value.findIndex(todo => todo.id === selectTodoValue.value?.id)
           if (index !== -1)
             localTodoList.value.splice(index, 1)
           showSuccessToast('删除成功')
@@ -35,27 +61,6 @@ function delTodoFun(item: any) {
         }
       })
     })
-}
-
-const editPopupShow = ref<boolean>(false)
-const todoValue = ref<string>('')
-const editTodo = ref<TodoItem | null>(null)
-const editBtnLoading = ref<boolean>(false)
-const todoValueError = ref<boolean>(false)
-
-watch(() => props.todoList, (newList) => {
-  localTodoList.value = [...newList]
-})
-
-watch(todoValue, (val) => {
-  if (val)
-    todoValueError.value = false
-})
-
-function openEdit(item: any) {
-  editTodo.value = item
-  editPopupShow.value = true
-  todoValue.value = item.todo
 }
 
 function editTodoFun() {
@@ -117,8 +122,11 @@ function getItemBackgroundColor(checked: boolean) {
 
       <van-field v-model="editTodo.todo" :border="false" :clearable="true" :error="todoValueError" :autofocus="true" class="my-20" label="Todo：" placeholder="Input Todo..." />
 
-      <div class="flex justify-between">
-        <div />
+      <div class="flex justify-end">
+        <van-button :loading="delBtnLoading" type="warning" loading-text="Deling ..." round native-type="submit" @click="delTodoFun">
+          Del
+        </van-button>
+        <div class="w-10" />
         <van-button :loading="editBtnLoading" type="primary" loading-text="Editing ..." round native-type="submit" @click="editTodoFun">
           Edit
         </van-button>
