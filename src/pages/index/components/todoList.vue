@@ -108,7 +108,7 @@ function getItemBackgroundColor(checked: boolean) {
         </transition>
       </div>
       <template #right>
-        <van-button square type="danger" text="删除" class="h-52! lh-52!" @click="delTodoFun(item)" />
+        <van-button square type="danger" text="删除" class="h-52! lh-52!" @click="delTodoFun()" />
       </template>
     </van-swipe-cell>
   </div>
