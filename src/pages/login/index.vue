@@ -42,7 +42,7 @@ async function asyncLogin(values: any) {
     if (code !== 200)
       return
 
-    showSuccessToast({ message: '登录成功', duration: 1000 })
+    showSuccessToast({ message: t('login.loginSuccessful'), duration: 1000 })
 
     setTimeout(() => {
       const { redirect, ...othersQuery } = router.currentRoute.value.query

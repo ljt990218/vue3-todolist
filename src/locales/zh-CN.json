@@ -17,13 +17,17 @@
     "password": "请输入密码",
     "pleaseEnteraccount": "请输入账号",
     "pleaseEnterPassword": "请输入密码",
+    "passwordInconsistent": "两次输入的密码不一致",
     "notLogged": "暂未登录",
     "goLoginExp": "去登录 体验更多功能",
     "goLogin": "去登录",
+    "loginSuccessful": "登录成功",
     "lookFirst": "先看看",
     "register": "注册",
+    "registeredSuccessfully": "注册成功",
     "goRegister": "没有账号？去注册>",
-    "pleaseEnterConfirmPassword": "请再次输入密码"
+    "pleaseEnterConfirmPassword": "请再次输入密码",
+    "exitSuccessfully": "退出成功"
   },
   "settings": {
     "logout": "✈️ 退出登录",

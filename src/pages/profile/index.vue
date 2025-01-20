@@ -40,7 +40,7 @@ function logoutFun() {
   })
     .then(() => {
       logout().then(() => {
-        showToast('退出成功')
+        showToast(t('login.exitSuccessfully'))
         router.replace('/login')
       })
     })

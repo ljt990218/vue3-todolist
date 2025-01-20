@@ -21,9 +21,9 @@ watch(
 )
 
 const postData = reactive({
-  account: 'admin3',
-  password: 'admin3',
-  confirmPassword: 'admin3',
+  account: '',
+  password: '',
+  confirmPassword: '',
 })
 
 const rules = reactive({
@@ -40,7 +40,7 @@ const rules = reactive({
 
 async function asyncRegister(values: any) {
   if (postData.password !== postData.confirmPassword) {
-    return showToast({ message: '两次输入的密码不一致', duration: 1500 })
+    return showToast({ message: t('login.passwordInconsistent'), duration: 1500 })
   }
 
   try {
@@ -50,7 +50,7 @@ async function asyncRegister(values: any) {
     if (code !== 200)
       return
 
-    showSuccessToast({ message: '注册成功', duration: 1000 })
+    showSuccessToast({ message: t('login.registeredSuccessfully'), duration: 1000 })
 
     setTimeout(() => {
       const { redirect, ...othersQuery } = router.currentRoute.value.query

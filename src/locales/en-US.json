@@ -17,13 +17,17 @@
     "password": "Password",
     "pleaseEnteraccount": "Please enter account",
     "pleaseEnterPassword": "Please enter password",
+    "passwordInconsistent": "The passwords entered twice are inconsistent",
     "notLogged": "Not logged in yet",
     "goLoginExp": "Go log in and experience more features",
     "goLogin": "Go login",
+    "loginSuccessful": "Login Successful",
     "lookFirst": "Have a look first",
     "register": "Register",
+    "registeredSuccessfully": "Registered Successfully",
     "goRegister": "No account? Go register >",
-    "pleaseEnterConfirmPassword": "Please enter your password again"
+    "pleaseEnterConfirmPassword": "Please enter your password again",
+    "exitSuccessfully": "Exit successfully"
   },
   "settings": {
     "logout": "✈️ Sign Out",
