@@ -26,8 +26,10 @@
     "pleaseEnterConfirmPassword": "请再次输入密码"
   },
   "settings": {
-    "logout": "退出登录",
+    "logout": "✈️ 退出登录",
+    "clickedWrongButton": "点错了",
     "currentVersion": "当前版本",
-    "comfirmTitle": "确认退出？"
+    "comfirmLogoutTitle": "确定退出登录？",
+    "tips": "提示"
   }
 }

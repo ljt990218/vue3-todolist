@@ -26,8 +26,10 @@
     "pleaseEnterConfirmPassword": "Please enter your password again"
   },
   "settings": {
-    "logout": "Sign Out",
+    "logout": "✈️ Sign Out",
+    "clickedWrongButton": "No",
     "currentVersion": "Current version",
-    "comfirmTitle": "Confirm Exit?"
+    "comfirmLogoutTitle": "Confirm Logout Exit?",
+    "tips": "Tip"
   }
 }

@@ -33,11 +33,10 @@ function onLanguageConfirm(event: { selectedOptions: PickerColumn }) {
 
 function logoutFun() {
   showConfirmDialog({
-    title: '提示',
-    message:
-    '确定退出登录？',
-    confirmButtonText: '退出登录',
-    cancelButtonText: '点错了',
+    title: t('settings.tips'),
+    message: t('settings.comfirmLogoutTitle'),
+    confirmButtonText: t('login.logout'),
+    cancelButtonText: t('settings.clickedWrongButton'),
   })
     .then(() => {
       logout().then(() => {
@@ -72,7 +71,7 @@ function logoutFun() {
         @click="showLanguagePicker = true"
       />
 
-      <van-cell title="退出登录" is-link @click="logoutFun" />
+      <van-cell :title="t('settings.logout')" is-link @click="logoutFun" />
     </VanCellGroup>
 
     <div class="h-16" />
