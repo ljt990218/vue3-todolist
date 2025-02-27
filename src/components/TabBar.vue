@@ -15,6 +15,7 @@ function handleScroll() {
   else {
     scrollDirection.value = 'up'
   }
+
   lastScrollTop = scrollTop <= 0 ? 0 : scrollTop
 }
 
@@ -28,7 +29,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div :style="{ opacity: scrollDirection === 'down' ? '0.3' : '1' }" class="tabbar shadow-base .dark:bg-[var(--van-background-2)]">
+  <div :style="{ bottom: scrollDirection === 'down' ? '-100px' : '10px' }" class="tabbar shadow-base .dark:bg-[var(--van-background-2)]">
     <div class="bar" :class="route.name === 'home' ? 'active' : ''" @click="router.replace('/')">
       {{ t('layouts.home') }}
     </div>
