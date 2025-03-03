@@ -1,8 +1,11 @@
 <script setup lang="ts">
 import type { ApiResponse, TodoItem } from '@/types'
 import { addTodo, queryTodoList } from '@/api/todo'
+import { useScrollStateStore } from '@/stores'
 import { closeToast, showLoadingToast, showSuccessToast, showToast } from 'vant'
 import TodoList from './components/todoList.vue'
+
+const useScrollState = useScrollStateStore()
 
 definePage({
   name: 'home',
@@ -87,24 +90,11 @@ function addTodoFun() {
   })
 }
 
-// 添加滚动事件处理函数
-function handleScroll() {
-  const scrollTop = document.documentElement.scrollTop || document.body.scrollTop
-  const clientHeight = document.documentElement.clientHeight
-  const scrollHeight = document.documentElement.scrollHeight
-
-  if (scrollHeight - scrollTop - clientHeight < 100 && !isLoading.value && hasMore.value) {
-    isLoading.value = true
-    page.value++
-    queryTodoListFun()
-  }
-}
-
 onMounted(() => {
-  window.addEventListener('scroll', handleScroll)
+  window.addEventListener('scroll', useScrollState.handleScroll)
 })
 onUnmounted(() => {
-  window.removeEventListener('scroll', handleScroll)
+  window.removeEventListener('scroll', useScrollState.handleScroll)
 })
 </script>
 
@@ -124,7 +114,8 @@ onUnmounted(() => {
 
     <!-- 创建按钮 -->
     <div
-      class="absolute bottom-70 right-20 h-40 w-40 flex cursor-pointer rounded-[50%] bg-[var(--van-blue)] lh-36 shadow-base"
+      :style="{ opacity: useScrollState.scrollDirection === 'down' ? '.5' : '1' }"
+      class="fixed bottom-70 right-20 h-40 w-40 flex cursor-pointer rounded-[50%] bg-[var(--van-blue)] lh-36 shadow-base"
       @click="createShow = true"
     >
       <van-icon class="m-auto" size="20" name="plus" color="#fff" />
