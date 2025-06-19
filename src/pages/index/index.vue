@@ -115,7 +115,7 @@ onUnmounted(() => {
     <!-- 创建按钮 -->
     <div
       :style="{ opacity: useScrollState.scrollDirection === 'down' ? '.5' : '1' }"
-      class="fixed bottom-70 right-20 h-40 w-40 flex cursor-pointer rounded-[50%] bg-[var(--van-blue)] lh-36 shadow-base"
+      class="liquid-button fixed bottom-70 right-20 h-40 w-40 flex cursor-pointer rounded-[50%] lh-36 shadow-base"
       @click="createShow = true"
     >
       <van-icon class="m-auto" size="20" name="plus" color="#fff" />
@@ -149,8 +149,22 @@ onUnmounted(() => {
   </van-popup>
 </template>
 
-<style>
-.van-pull-refresh {
-  overflow: unset;
+<style lang="less">
+.liquid-button {
+  background: rgba(8, 12, 230, 0.8);
+  backdrop-filter: blur(16px) saturate(150%);
+  box-shadow:
+    0 2px 8px rgba(0, 0, 0, 0.06),
+    inset 0 1px 2px rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.dark .liquid-button {
+  background: rgba(30, 32, 60, 0.8);
+  backdrop-filter: blur(16px) saturate(180%);
+  box-shadow:
+    0 2px 8px rgba(0, 0, 0, 0.18),
+    inset 0 1px 2px rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 </style>
