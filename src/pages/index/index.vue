@@ -22,11 +22,7 @@ const pageSize = ref<number>(20)
 const hasMore = ref<boolean>(true)
 const todoList = ref<TodoItem[]>([])
 
-function queryTodoListFun(resetPage = false) {
-  // 如果需要重置页码
-  if (resetPage)
-    page.value = 1
-
+function queryTodoListFun() {
   queryTodoList({ page: page.value, pageSize: pageSize.value }).then(({ code, data }: ApiResponse) => {
     closeToast()
     isLoading.value = false
@@ -37,12 +33,7 @@ function queryTodoListFun(resetPage = false) {
         item.open = true
       })
 
-      // 根据是否重置页码决定是替换还是追加数据
-      if (resetPage || page.value === 1)
-        todoList.value = data.todos
-      else
-        todoList.value = [...todoList.value, ...data.todos]
-
+      todoList.value = [...todoList.value, ...data.todos]
       hasMore.value = todoList.value.length < data.meta.total
     }
   })
@@ -54,7 +45,10 @@ function onRefresh() {
     message: 'load...',
     forbidClick: true,
   })
-  queryTodoListFun(true)
+  
+  page.value = 1
+  todoList.value = []
+  queryTodoListFun()
 }
 
 const createShow = ref<boolean>(false)
