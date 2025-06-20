@@ -47,6 +47,7 @@ export default ({ mode }: ConfigEnv): UserConfig => {
             rootContainingBlockSelectorList: [
               'van-tabbar',
               'van-popup',
+              '.liquid-button',
             ],
             border: true,
           }),
