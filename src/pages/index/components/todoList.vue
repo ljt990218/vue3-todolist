@@ -89,15 +89,15 @@ function editTodoFun() {
 }
 
 function getItemBackgroundColor(checked: boolean) {
-  if (checked) {
+  if (checked)
     return appStore.mode === 'dark' ? '#1c1c1e' : '#f0f0f0'
-  }
+
   return appStore.mode === 'dark' ? '#161616' : '#fff'
 }
 </script>
 
 <template>
-  <div v-for="(item, index) in localTodoList" :key="item.id" class="mt-10 flex items-center overflow-hidden rounded-8 bg-[var(--van-background-2)] shadow-sm first:mt-0" :style="{ backgroundColor: getItemBackgroundColor(item.checked) }">
+  <div v-for="(item, index) in localTodoList" :key="item.id" class="mt-10 flex items-center overflow-hidden rounded-8 bg-[var(--van-background-2)] shadow-sm duration-300 first:mt-0" :style="{ backgroundColor: getItemBackgroundColor(item.checked) }">
     <van-swipe-cell class="w-full" @open="editIconShow(index, false)" @close="editIconShow(index, true)">
       <div class="flex items-center justify-between py-16 pl-8 pr-24">
         <van-checkbox v-model="item.checked">

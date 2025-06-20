@@ -45,7 +45,7 @@ function onRefresh() {
     message: 'load...',
     forbidClick: true,
   })
-  
+
   page.value = 1
   todoList.value = []
   queryTodoListFun()
@@ -133,8 +133,8 @@ onUnmounted(() => {
       <div class="flex justify-between">
         <div />
         <van-button
-          :loading="createBtnLoading" type="primary" loading-text="Adding ..." round native-type="submit"
-          @click="addTodoFun"
+          :loading="createBtnLoading" type="primary" loading-text="Adding ..." round
+          native-type="submit" @click="addTodoFun"
         >
           Add
         </van-button>
@@ -145,6 +145,7 @@ onUnmounted(() => {
 
 <style lang="less">
 .liquid-button {
+  transition: all 0.3s ease-in-out;
   background: rgba(8, 12, 230, 0.8);
   backdrop-filter: blur(16px) saturate(150%);
   box-shadow:
