@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import type { ApiResponse, TodoItem } from '@/types'
-import { addTodo, queryTodoList } from '@/api/todo'
+import { addTodo, delTodo, queryTodoList, updTodo } from '@/api/todo'
 import { useScrollStateStore } from '@/stores'
-import { closeToast, showLoadingToast, showSuccessToast, showToast } from 'vant'
-import TodoList from './components/todoList.vue'
+import { closeToast, showConfirmDialog, showLoadingToast, showSuccessToast, showToast } from 'vant'
+import TodoItemComponent from './components/TodoItem.vue'
 
 const useScrollState = useScrollStateStore()
 
@@ -55,10 +55,23 @@ const createShow = ref<boolean>(false)
 const todoValue = ref<any>('')
 const createBtnLoading = ref<boolean>(false)
 const todoValueError = ref<boolean>(false)
+
+// 编辑弹窗相关状态
+const editPopupShow = ref<boolean>(false)
+const editTodo = ref<TodoItem | null>(null)
+const editBtnLoading = ref<boolean>(false)
+const editTodoValueError = ref<boolean>(false)
+const delBtnLoading = ref<boolean>(false)
+
 watch(todoValue, (val: any) => {
   if (val)
     todoValueError.value = false
 })
+
+watch(editTodo, (val) => {
+  if (val && val.todo)
+    editTodoValueError.value = false
+}, { deep: true })
 
 function addTodoFun() {
   if (!todoValue.value) {
@@ -74,7 +87,7 @@ function addTodoFun() {
 
     if (code === 200) {
       showSuccessToast('添加成功')
-      queryTodoListFun()
+      onRefresh() // 重新刷新获取最新数据
       todoValue.value = ''
       createShow.value = false
     }
@@ -82,6 +95,99 @@ function addTodoFun() {
       showToast(message)
     }
   })
+}
+
+// 处理编辑事件
+function handleTodoEdit(todo: TodoItem) {
+  editTodo.value = { ...todo }
+  editPopupShow.value = true
+}
+
+// 处理删除事件
+function handleTodoDelete(todo: TodoItem) {
+  showConfirmDialog({
+    title: '提示',
+    message: `是否要删除'${todo.todo}'`,
+  })
+    .then(() => {
+      delBtnLoading.value = true
+      delTodo(todo.id).then(({ code, message }) => {
+        delBtnLoading.value = false
+        if (code === 200) {
+          const index = todoList.value.findIndex(item => item.id === todo.id)
+          if (index !== -1) {
+            todoList.value.splice(index, 1)
+          }
+          showSuccessToast('删除成功')
+        }
+        else {
+          showToast(message)
+        }
+      }).catch(() => {
+        delBtnLoading.value = false
+      })
+    })
+}
+
+// 执行编辑操作
+function editTodoFun() {
+  if (!editTodo.value || !editTodo.value.todo.trim()) {
+    editTodoValueError.value = true
+    return
+  }
+
+  editBtnLoading.value = true
+
+  updTodo(editTodo.value).then(({ code, message }: ApiResponse) => {
+    editBtnLoading.value = false
+    if (code === 200) {
+      editPopupShow.value = false
+      const index = todoList.value.findIndex(todo => todo.id === editTodo.value!.id)
+      if (index !== -1) {
+        todoList.value[index].todo = editTodo.value!.todo
+      }
+      showSuccessToast('修改成功')
+    }
+    else {
+      showToast(message)
+    }
+  }).catch((error: any) => {
+    editBtnLoading.value = false
+    showToast(error.message)
+  })
+}
+
+// 从编辑弹窗中删除todo
+function delTodoFromEdit() {
+  if (!editTodo.value)
+    return
+
+  showConfirmDialog({
+    title: '提示',
+    message: `是否要删除'${editTodo.value.todo}'`,
+  })
+    .then(() => {
+      delBtnLoading.value = true
+      delTodo(editTodo.value!.id).then(({ code, message }) => {
+        delBtnLoading.value = false
+        if (code === 200) {
+          editPopupShow.value = false
+          const index = todoList.value.findIndex(item => item.id === editTodo.value!.id)
+          if (index !== -1) {
+            todoList.value.splice(index, 1)
+          }
+          showSuccessToast('删除成功')
+        }
+        else {
+          showToast(message)
+        }
+      }).catch(() => {
+        delBtnLoading.value = false
+      })
+    })
+    .catch(() => {
+      delBtnLoading.value = false
+    })
 }
 
 onMounted(() => {
@@ -96,7 +202,14 @@ onUnmounted(() => {
   <div class="relative h-[100dvh] pt-16">
     <div v-if="todoList.length > 0" class="px-16 pb-80">
       <van-pull-refresh v-model="isLoading" success-text="刷新成功" @refresh="onRefresh">
-        <TodoList :todo-list="todoList" />
+        <TodoItemComponent
+          v-for="(todo, index) in todoList"
+          :key="todo.id"
+          :todo="todo"
+          :index="index"
+          @delete="handleTodoDelete"
+          @edit="handleTodoEdit"
+        />
       </van-pull-refresh>
     </div>
 
@@ -137,6 +250,50 @@ onUnmounted(() => {
           native-type="submit" @click="addTodoFun"
         >
           Add
+        </van-button>
+      </div>
+    </div>
+  </van-popup>
+
+  <!-- 编辑弹窗 -->
+  <van-popup v-model:show="editPopupShow" class="rounded-8 p-12">
+    <div class="editShow">
+      <div class="text-center text-22">
+        Edit Todo
+      </div>
+
+      <van-field
+        v-model="editTodo!.todo"
+        :border="false"
+        :clearable="true"
+        :error="editTodoValueError"
+        :autofocus="true"
+        class="my-20"
+        label="Todo："
+        placeholder="Input Todo..."
+      />
+
+      <div class="flex justify-end">
+        <van-button
+          :loading="delBtnLoading"
+          type="warning"
+          loading-text="Deleting ..."
+          round
+          native-type="submit"
+          @click="delTodoFromEdit"
+        >
+          Del
+        </van-button>
+        <div class="w-10" />
+        <van-button
+          :loading="editBtnLoading"
+          type="primary"
+          loading-text="Editing ..."
+          round
+          native-type="submit"
+          @click="editTodoFun"
+        >
+          Edit
         </van-button>
       </div>
     </div>
