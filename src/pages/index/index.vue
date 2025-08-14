@@ -222,10 +222,12 @@ onUnmounted(() => {
     <!-- 创建按钮 -->
     <div
       :style="{ opacity: useScrollState.scrollDirection === 'down' ? '.5' : '1' }"
-      class="liquid-button fixed bottom-70 right-20 h-40 w-40 flex cursor-pointer rounded-[50%] lh-36 shadow-base"
+      class="liquid-button fixed bottom-80 right-24 z-50 h-48 w-48 flex cursor-pointer select-none rounded-[50%] lh-48 shadow-base"
       @click="createShow = true"
+      @contextmenu.prevent
+      @selectstart.prevent
     >
-      <van-icon class="m-auto" size="20" name="plus" color="#fff" />
+      <van-icon class="m-auto" size="24" name="plus" color="#fff" />
     </div>
 
     <TabBar />
@@ -300,23 +302,74 @@ onUnmounted(() => {
   </van-popup>
 </template>
 
-<style lang="less">
+<style lang="less" scoped>
 .liquid-button {
-  transition: all 0.3s ease-in-out;
-  background: rgba(8, 12, 230, 0.8);
-  backdrop-filter: blur(16px) saturate(150%);
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  background: rgba(0, 122, 255, 0.25);
+  backdrop-filter: blur(20px) saturate(180%);
   box-shadow:
-    0 2px 8px rgba(0, 0, 0, 0.06),
-    inset 0 1px 2px rgba(255, 255, 255, 0.6);
-  border: 1px solid rgba(255, 255, 255, 0.3);
+    0 8px 32px rgba(0, 122, 255, 0.15),
+    0 2px 8px rgba(0, 122, 255, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4),
+    inset 0 -1px 0 rgba(0, 122, 255, 0.2);
+  border: 1px solid rgba(0, 122, 255, 0.3);
+  overflow: hidden;
+}
+
+.liquid-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.4) 0%,
+    rgba(255, 255, 255, 0.1) 50%,
+    rgba(255, 255, 255, 0.05) 100%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.liquid-button:hover {
+  transform: translateY(-2px) scale(1.05);
+  background: rgba(0, 122, 255, 0.35);
+  box-shadow:
+    0 12px 40px rgba(0, 122, 255, 0.2),
+    0 4px 12px rgba(0, 122, 255, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5),
+    inset 0 -1px 0 rgba(0, 122, 255, 0.25);
+}
+
+.liquid-button:hover::before {
+  opacity: 1;
+}
+
+.liquid-button:active {
+  transform: translateY(0) scale(0.98);
+  transition: all 0.1s ease;
 }
 
 .dark .liquid-button {
-  background: rgba(30, 32, 60, 0.8);
-  backdrop-filter: blur(16px) saturate(180%);
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(20px) saturate(200%);
   box-shadow:
-    0 2px 8px rgba(0, 0, 0, 0.18),
-    inset 0 1px 2px rgba(255, 255, 255, 0.12);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+    0 8px 32px rgba(0, 0, 0, 0.3),
+    0 2px 8px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.dark .liquid-button:hover {
+  background: rgba(255, 255, 255, 0.12);
+  box-shadow:
+    0 12px 40px rgba(0, 0, 0, 0.4),
+    0 4px 12px rgba(0, 0, 0, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.08);
 }
 </style>
